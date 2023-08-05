@@ -58,3 +58,8 @@ function sendMessage(text, webhook, icon, username, channel) {
             throw Error(err);
         });
 }
+
+console.log('Type of steps.release.outputs:', typeof steps.release.outputs);
+console.log('Content of steps.release.outputs:', steps.release.outputs);
+console.log('Type of release-please-output:', typeof payload);
+console.log('Content of release-please-output:', payload);
