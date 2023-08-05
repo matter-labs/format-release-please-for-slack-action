@@ -1,25 +1,30 @@
-# Format release please for MatterMost 
+# Format release please for Slack
 
-Format output from Release Please and send it to MatterMost
+Format output from Release Please and send it to Slack
 
-## ENV 
+## ENV
+
 ### `RELEASE_PLEASE_OUTPUT`
+
 **REQUEIRED**  Release please output
 
 ## Inputs
 
-### `mattermost-url`
-**REQUIRED**  The Mattermost Incoming Webhook
+### `slack-url`
 
-### `mattermost-channel`
+**REQUIRED**  The Slack Incoming Webhook
+
+### `slack-channel`
+
 The name of the channel you want to post, by default will post in the channel that was setup in the webhook creation
   
-### `mattermost-username`
+### `slack-username`
+
 The name of the sender of the message. ie, "GitHubAction"
   
-  
-### `mattermost-icon`
-User/Bot icon shown with Mattermost message
+### `slack-icon`
+
+User/Bot icon shown with Slack message
 
 ## Example usage
 
@@ -27,5 +32,5 @@ User/Bot icon shown with Mattermost message
 uses: Deniallugo/format-release-for-mm-action@v1.0
 with:
   release-please-output: ${{ steps.release.outputs }}
-  mattermost-url: ${{ secrets.MATTERMOST_WEBHOOK }}
+  slack-webhook-url: ${{ secrets.SLACK_WEBHOOK }}
 ```

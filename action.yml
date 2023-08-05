@@ -1,22 +1,21 @@
-name: 'Format Release Please for MatterMost messages'
-description: 'Format Release Please for MatterMost messages'
+name: "Format Release Please for Slack messages"
+description: "Format Release Please for Slack messages"
 inputs:
   release-please-output:
-    description: 'Release please output'
+    description: "Release please output"
     required: true
-  mattermost-url: 
-    description: 'The Mattermost Incoming Webhook'
+  slack-webhook-url:
+    description: "The Slack Incoming Webhook"
     required: true
-  mattermost-channel: 
-    description: 'The name of the channel you want to post, by default will post in the channel that was setup in the webhook creation'
-    required: false 
-  mattermost-username: 
+  slack-channel:
+    description: "The name of the channel you want to post, by default will post in the channel that was setup in the webhook creation"
+    required: false
+  slack-username:
     description: 'The name of the sender of the message. ie, "GitHubAction"'
-    required: false 
-  mattermost-icon: 
-    description: 'User/Bot icon shown with Mattermost message'
-    required: false 
+    required: false
+  slack-icon:
+    description: "User/Bot icon shown with Slack message"
+    required: false
 runs:
-  using: 'node16'
-  main: 'index.js'
-
+  using: "node16"
+  main: "index.js"
