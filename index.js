@@ -4,8 +4,6 @@ const slackifyMarkdown = require('slackify-markdown');
 
 try {
     let payload = core.getInput('release-please-output');
-    console.log('Type of release-please-output:', typeof payload);
-    console.log('Content of release-please-output:', payload);
     if (payload == "") {
         throw Error("Empty output");
     }
@@ -29,12 +27,12 @@ try {
 
 
 function preparePayload(payload) {
-    const paths_released = payload['paths_released'];
+    const paths_released = JSON.parse(payload['paths_released']); // Parse as JSON here
     let releases = [];
     for (const path of paths_released) {
         const body = payload[`${path}--body`];
-        const slackifiedBody = slackifyMarkdown(body);
-        const text = `\n *${path}* \n ${slackifiedBody} \n`;
+        const slackifiedBody = slackifyMarkdown(body); // convert markdown to Slack format
+        const text = `\n # ${path} \n ${slackifiedBody} \n`;
         releases.push(text);
     }
     return releases;
