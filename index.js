@@ -4,6 +4,8 @@ const slackifyMarkdown = require('slackify-markdown');
 
 try {
     let payload = core.getInput('release-please-output');
+    console.log('Type of release-please-output:', typeof payload);
+    console.log('Content of release-please-output:', payload);
     if (payload == "") {
         throw Error("Empty output");
     }
@@ -58,6 +60,3 @@ function sendMessage(text, webhook, icon, username, channel) {
             throw Error(err);
         });
 }
-
-console.log('Type of release-please-output:', typeof payload);
-console.log('Content of release-please-output:', payload);
