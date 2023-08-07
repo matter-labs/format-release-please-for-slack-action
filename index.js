@@ -32,7 +32,7 @@ function preparePayload(payload) {
     for (const path of paths_released) {
         const body = payload[`${path}--body`];
         const slackifiedBody = slackifyMarkdown(body); // convert markdown to Slack format
-        const text = `\n *${path}* \n\n ${slackifiedBody} \n`;
+        const text = `*${path}* \n\n ${slackifiedBody} \n`;
         releases.push(text);
     }
     return releases;
