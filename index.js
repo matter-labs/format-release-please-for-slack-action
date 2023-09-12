@@ -25,14 +25,15 @@ try {
     core.setFailed(error.message);
 }
 
-
 function preparePayload(payload) {
+    const repoName = process.env.GITHUB_REPOSITORY; // Get the repository name
+    let repoUrl = `https://github.com/${repoName}`;
     let releases = [];
 
     // Handle the case where body is directly under the root of the payload
     if (payload.body) {
-        const slackifiedBody = slackifyMarkdown(payload.body);
-        const text = `*${payload.name}*\n\n${slackifiedBody}\n`;
+        const slackifiedBody = slackifyMarkdown(payload.body); // Convert markdown to Slack format
+        const text = `*<${repoUrl}|${repoName}>*\n\n${slackifiedBody}\n`; // Make the repo name a clickable and bold link
         releases.push(text);
     }
 
@@ -43,7 +44,7 @@ function preparePayload(payload) {
             const body = payload[`${path}--body`];
             if (body) {
                 const slackifiedBody = slackifyMarkdown(body); // Convert markdown to Slack format
-                const text = `*${path}*\n\n${slackifiedBody}\n`;
+                const text = `*<${repoUrl}|${repoName}>*\n*${path}*\n${slackifiedBody}\n`; // Include bold repo name, path, and body in the message
                 releases.push(text);
             }
         }
