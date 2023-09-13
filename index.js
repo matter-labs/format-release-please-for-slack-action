@@ -25,16 +25,31 @@ try {
     core.setFailed(error.message);
 }
 
-
 function preparePayload(payload) {
-    const paths_released = JSON.parse(payload['paths_released']); // Parse as JSON here
+    const repoName = process.env.GITHUB_REPOSITORY; // Get the repository name
+    let repoUrl = `https://github.com/${repoName}`;
     let releases = [];
-    for (const path of paths_released) {
-        const body = payload[`${path}--body`];
-        const slackifiedBody = slackifyMarkdown(body); // convert markdown to Slack format
-        const text = `*${path}*\n\n${slackifiedBody}\n`;
+
+    // Handle the case where body is directly under the root of the payload
+    if (payload.body) {
+        const slackifiedBody = slackifyMarkdown(payload.body); // Convert markdown to Slack format
+        const text = `*<${repoUrl}|${repoName}>*\n\n${slackifiedBody}\n`; // Make the repo name a clickable and bold link
         releases.push(text);
     }
+
+    // Handle the case where bodies are associated with specific paths
+    if (payload.paths_released) {
+        const paths_released = JSON.parse(payload['paths_released']); // Parse as JSON here
+        for (const path of paths_released) {
+            const body = payload[`${path}--body`];
+            if (body) {
+                const slackifiedBody = slackifyMarkdown(body); // Convert markdown to Slack format
+                const text = `*<${repoUrl}|${repoName}>*\n*${path}*\n${slackifiedBody}\n`; // Include bold repo name, path, and body in the message
+                releases.push(text);
+            }
+        }
+    }
+
     return releases;
 }
 
